@@ -14,7 +14,7 @@ on:
         default: '30'
 
 env:
-  CIUDAD: 'Madrid'
+  CIUDAD: 'QUITO'
   SECRET_API_KEY: ${{ secrets.API_KEY }}  # Asegúrate de configurar este secreto en tu repositorio
 
 jobs:
