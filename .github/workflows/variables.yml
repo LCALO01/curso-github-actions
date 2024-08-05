@@ -1,5 +1,5 @@
-name: Variables
-run-name: ¡Aprendiendo a usar Variables!
+name: Saludo usando variables
+run-name: Usando Variables en GitHub Actions
 
 on:
   workflow_dispatch:
@@ -7,19 +7,22 @@ on:
       usuario:
         description: 'Nombre del usuario'
         required: true
-        default: 'Juan'
+        default: 'LUIS'
+      edad:
+        description: 'Edad del usuario'
+        required: true
+        default: '30'
 
 env:
-  NOMBRE: ${{ github.event.inputs.usuario }}
-  EDAD: 25
   CIUDAD: 'Madrid'
+  SECRET_API_KEY: ${{ secrets.API_KEY }}  # Asegúrate de configurar este secreto en tu repositorio
 
 jobs:
   saludo:
     runs-on: ubuntu-latest
     steps:
       - name: Saludar
-        run: echo "Hola, mi nombre es $NOMBRE y tengo $EDAD años."
+        run: echo "Hola, mi nombre es ${{ github.event.inputs.usuario }} y tengo ${{ github.event.inputs.edad }} años."
 
   ciudad:
     runs-on: ubuntu-latest
@@ -32,18 +35,24 @@ jobs:
     steps:
       - name: Calcular edad en meses
         run: |
-          meses=$(( $EDAD * 12 ))
-          echo "$NOMBRE tiene $meses meses de edad."
+          meses=$(( ${{ github.event.inputs.edad }} * 12 ))
+          echo "${{ github.event.inputs.usuario }} tiene $meses meses de edad."
 
   edad_categoria:
     runs-on: ubuntu-latest
     steps:
       - name: Determinar categoría de edad
         run: |
-          if [ $EDAD -lt 18 ]; then
-            echo "$NOMBRE es menor de edad."
-          elif [ $EDAD -ge 18 ] && [ $EDAD -lt 65 ]; then
-            echo "$NOMBRE es adulto."
+          if [ ${{ github.event.inputs.edad }} -lt 18 ]; then
+            echo "${{ github.event.inputs.usuario }} es menor de edad."
+          elif [ ${{ github.event.inputs.edad }} -ge 18 ] && [ ${{ github.event.inputs.edad }} -lt 65 ]; then
+            echo "${{ github.event.inputs.usuario }} es adulto."
           else
-            echo "$NOMBRE es anciano."
+            echo "${{ github.event.inputs.usuario }} es anciano."
           fi
+
+  usar_secreto:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Usar la clave API secreta
+        run: echo "La clave API es: $SECRET_API_KEY"
