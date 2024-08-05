@@ -12,16 +12,51 @@ on:
         required: true
         default: 'Luis'
         type: string
+
 jobs:
   mayor:
     if: ${{ inputs.edad >= 18 }}
     runs-on: ubuntu-latest
     steps:
       - name: Correr script
-        run: echo ${{ inputs.nombre }} es mayor de edad
+        run: echo "${{ inputs.nombre }} es mayor de edad"    
+
   menor:
     if: ${{ inputs.edad < 18 }}
     runs-on: ubuntu-latest
     steps:
       - name: Correr script
-        run: echo ${{ inputs.nombre }} es menor de edad
+        run: echo "${{ inputs.nombre }} es menor de edad"    
+
+  par_o_impar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verificar si la edad es par o impar
+        run: |
+          if [ ${{ inputs.edad }} % 2 -eq 0 ]; then
+            echo "${{ inputs.nombre }} tiene una edad par"
+          else
+            echo "${{ inputs.nombre }} tiene una edad impar"
+          fi
+
+  es_adolescente:
+    if: ${{ inputs.edad >= 13 && inputs.edad < 20 }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verificar si es adolescente
+        run: echo "${{ inputs.nombre }} es adolescente"
+
+  es_anciano:
+    if: ${{ inputs.edad >= 65 }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verificar si es anciano
+        run: echo "${{ inputs.nombre }} es anciano"
+
+  edad_en_meses:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Calcular edad en meses
+        run: |
+          meses=$(( ${{ inputs.edad }} * 12 ))
+          echo "${{ inputs.nombre }} tiene ${meses} meses de edad"
