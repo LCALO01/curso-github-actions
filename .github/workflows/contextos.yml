@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Desplegar en una rama feature
-        run: echo "Desplegando en una rama de características: $GITHUB_REF"
+        run: echo "Desplegando en una rama de características $GITHUB_REF"
 
   print-environment-variables:
     runs-on: ubuntu-latest
