@@ -1,0 +1,49 @@
+name: Variables
+run-name: ¡Aprendiendo a usar Variables!
+
+on:
+  workflow_dispatch:
+    inputs:
+      usuario:
+        description: 'Nombre del usuario'
+        required: true
+        default: 'Juan'
+
+env:
+  NOMBRE: ${{ github.event.inputs.usuario }}
+  EDAD: 25
+  CIUDAD: 'Madrid'
+
+jobs:
+  saludo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Saludar
+        run: echo "Hola, mi nombre es $NOMBRE y tengo $EDAD años."
+
+  ciudad:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Información de la ciudad
+        run: echo "Vivo en $CIUDAD."
+
+  edad_en_meses:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Calcular edad en meses
+        run: |
+          meses=$(( $EDAD * 12 ))
+          echo "$NOMBRE tiene $meses meses de edad."
+
+  edad_categoria:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Determinar categoría de edad
+        run: |
+          if [ $EDAD -lt 18 ]; then
+            echo "$NOMBRE es menor de edad."
+          elif [ $EDAD -ge 18 ] && [ $EDAD -lt 65 ]; then
+            echo "$NOMBRE es adulto."
+          else
+            echo "$NOMBRE es anciano."
+          fi
