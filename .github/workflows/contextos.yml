@@ -1,0 +1,30 @@
+name: Contexto
+run-name: ¡Estoy aprendiendo a usar Contextos!
+
+on: push
+
+jobs:
+  check-main:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Desplegar en la rama principal
+        run: echo "Desplegando en la rama $GITHUB_REF"
+
+  check-feature:
+    if: ${{ startsWith(github.ref, 'refs/heads/feature/') }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Desplegar en una rama feature
+        run: echo "Desplegando en una rama de características: $GITHUB_REF"
+
+  print-environment-variables:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Mostrar variables de entorno
+        run: |
+          echo "El commit actual es: $GITHUB_SHA"
+          echo "El autor del commit es: $GITHUB_ACTOR"
+          echo "La acción fue disparada por: $GITHUB_EVENT_NAME"
+
+      
